@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponse
+
 from .models import Type, Item
 
 
@@ -18,36 +18,26 @@ from .models import Type, Item
 # ]
 def index(request):
     # type_list = Type.objects.all().order_by('id')
-    item_list = Item.objects.all().order_by('-price')[:7]
-    response = HttpResponse()
-    heading1 = '<p>' + 'Different Items (sorted by price, limited to top 7 most expensive items): ' + '</p>'
-    response.write(heading1)
-    for item in item_list:
-        para = '<p> $' + str(item.price) + ' ' + str(item) + '</p>'
-        response.write(para)
-    return response
+    type_list = Type.objects.all().order_by('id')[:7]
+    return render(request, 'myapp1/index0.html', {'type_list': type_list})
+    # Q-B-iii: Yes, we are passing the context object because in the index0.html, we will be retrieving the type_list variable
 
-
-# def index(request):
-#     context={
-#         'books':books
-#     }
-#     #return HttpResponseBadRequest()
-#     return render(request, 'dummy/index.html', context)
 
 def about(request):
     # return HttpResponse('This is the about page')
-    return render(request, 'myApp1/about.html')
+    return render(request, 'myApp1/about0.html')
+    # Q-D-iii: No, we are not passing any context variables to this render method
+    # since we are not using any object to render the data
 
 
 def detail(request, type_no):
     type_with_id = get_object_or_404(Type, pk=type_no)
     # type_with_id = Type.objects.get(id=type_no)
     items_with_type = Item.objects.filter(type=type_with_id)
-    response = HttpResponse()
-    heading1 = '<p>' + 'Different Items with type: ' + str(type_with_id) + '</p>'
-    response.write(heading1)
-    for item in items_with_type:
-        para = '<p>' + str(item.price) + ': ' + str(item) + '</p>'
-        response.write(para)
-    return response
+    context = {
+        'type': type_with_id,
+        'items': items_with_type
+    }
+    return render(request, 'myApp1/detail0.html', context)
+    # Q-E-iv: Yes, we need to pass context variable
+    # because we need to access type and items associated with it in the detail0.html
