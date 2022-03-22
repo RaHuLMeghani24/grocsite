@@ -20,7 +20,8 @@ def index(request):
     # type_list = Type.objects.all().order_by('id')
     type_list = Type.objects.all().order_by('id')[:7]
     return render(request, 'myapp1/index0.html', {'type_list': type_list})
-    # Q-B-iii: Yes, we are passing the context object because in the index0.html, we will be retrieving the type_list variable
+    # Q-B-iii: Yes, we are passing the context object because in the index0.html
+    # we will be retrieving the type_list variable
 
 
 def about(request):
