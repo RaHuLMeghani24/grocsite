@@ -21,10 +21,15 @@ class Item(models.Model):
     stock = models.PositiveIntegerField(default=100)
     available = models.BooleanField(default=True)
     product_description = models.TextField(blank=True)
+    # indicates the people interested in this item
+    interested = models.PositiveIntegerField(default=0)
 
     def __str__(self):
         details = "{} (item)"
         return details.format(self.name)
+
+    def topup(self):
+        self.stock += 200
 
 
 class Client(User):
