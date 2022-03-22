@@ -1,24 +1,41 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-
-<p>Type: {{ type.name }}</p>
-{% if items %}
-<h2> List of Items </h2>
-<ol>
-	{% for item in items %}
-<li> {{ item.name}} </li>
-{% endfor %}
-</ol>
-{% else %}
-<strong> None of the items is available! </strong>
-{% endif %}
-
+{#<!DOCTYPE html>#}
+{#<html lang="en">#}
+{#<head>#}
+{#    <meta charset="UTF-8">#}
+{#    <title>Title</title>#}
+{#</head>#}
+{#<body>#}
+{##}
+{#<p>Type: {{ type.name }}</p>#}
+{#{% if items %}#}
+{#    <h2> List of Items </h2>#}
+{#    <ol>#}
+{#        {% for item in items %}#}
+{#            <li> {{ item.name }} </li>#}
+{#        {% endfor %}#}
+{#    </ol>#}
+{#{% else %}#}
+{#    <strong> None of the items is available! </strong>#}
+{#{% endif %}#}
+{##}
 {#<p><a href="/">Main Page</a></p>#}
-<a href="{% url 'myApp1:index' %}">Main Page</a>
-</body>
-</html>
+{#<a href="{% url 'myApp1:index' %}">Main Page</a>#}
+{#</body>#}
+{#</html>#}
+{% extends "myApp1/base.html" %}
+{% block body_block %}
+    <p>Type: {{ type.name }}</p>
+    {% if items %}
+        <h2> List of Items </h2>
+        <ol>
+            {% for item in items %}
+                <li> {{ item.name }} </li>
+            {% endfor %}
+        </ol>
+    {% else %}
+        <strong> None of the items is available! </strong>
+    {% endif %}
+
+    {#<p><a href="/">Main Page</a></p>#}
+    {#    <a href="{% url 'myApp1:index' %}">Main Page</a>#}
+{% endblock %}

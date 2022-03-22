@@ -1,0 +1,16 @@
+body {
+    background-color: azure;
+    color: navy;
+}
+
+.hbar1 {
+    display: inline;
+    margin: 15px;
+}
+
+h1 {
+    font-size: xxx-large;
+    color: blue;
+    font-style: italic;
+    position: relative;
+}

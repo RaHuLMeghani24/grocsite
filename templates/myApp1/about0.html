@@ -1,14 +1,18 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-<p>This is an Online Grocery Store</p>
-
+{#<!DOCTYPE html>#}
+{#<html lang="en">#}
+{#<head>#}
+{#    <meta charset="UTF-8">#}
+{#    <title>Title</title>#}
+{#</head>#}
+{#<body>#}
+{#<p>This is an Online Grocery Store</p>#}
+{##}
 {#<p><a href="/">Main Page</a></p>#}
-<a href="{% url 'myApp1:index' %}">Main Page</a>
-
-</body>
-</html>
+{#<a href="{% url 'myApp1:index' %}">Main Page</a>#}
+{##}
+{#</body>#}
+{#</html>#}
+{% extends "myApp1/base.html" %}
+{% block body_block %}
+    <p>This is an Online Grocery Store</p>
+{% endblock %}
