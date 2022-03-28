@@ -20,15 +20,11 @@ def index(request):
     # type_list = Type.objects.all().order_by('id')
     type_list = Type.objects.all().order_by('id')[:7]
     return render(request, 'myapp1/index0.html', {'type_list': type_list})
-    # Q-B-iii: Yes, we are passing the context object because in the index0.html
-    # we will be retrieving the type_list variable
 
 
 def about(request):
     # return HttpResponse('This is the about page')
     return render(request, 'myApp1/about0.html')
-    # Q-D-iii: No, we are not passing any context variables to this render method
-    # since we are not using any object to render the data
 
 
 def detail(request, type_no):
@@ -40,5 +36,12 @@ def detail(request, type_no):
         'items': items_with_type
     }
     return render(request, 'myApp1/detail0.html', context)
-    # Q-E-iv: Yes, we need to pass context variable
-    # because we need to access type and items associated with it in the detail0.html
+
+
+def items(request):
+    itemlist = Item.objects.all().order_by('id')[:20]
+    return render(request, 'myapp1/items.html', {'itemlist': itemlist})
+
+
+def placeorder(request):
+    return render(request, 'myapp1/placeorder.html', {})
