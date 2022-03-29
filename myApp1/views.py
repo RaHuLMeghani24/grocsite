@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 
+from .forms import OrderItemForm, InterestForm
 from .models import Type, Item
 
 
@@ -44,4 +45,29 @@ def items(request):
 
 
 def placeorder(request):
-    return render(request, 'myapp1/placeorder.html', {})
+    msg = ''
+    itemlist = Item.objects.all()
+    if request.method == 'POST':
+        form = OrderItemForm(request.POST)
+        if form.is_valid():
+            order = form.save(commit=False)
+            if order.items_ordered <= order.item.stock:
+                order.save()
+                msg = 'Your order has been placed successfully.'
+                print('order item', order.item, 'before saving')
+                order.item.stock -= order.items_ordered
+                order.item.save()
+                # TODO remove debug
+                print('order item', order.item, 'after saving')
+            else:
+                msg = 'We do not have sufficient stock to fill your order.'
+                return render(request, 'myapp1/order_response.html', {'msg': msg})
+    else:
+        form = OrderItemForm()
+    return render(request, 'myapp1/placeorder.html', {'form': form, 'msg': msg, 'itemlist': itemlist})
+
+
+def itemdetail(request, item_id):
+    form = InterestForm()
+    item = Item.objects.get(id=item_id)
+    return render(request, 'myApp1/itemdetail.html', {'form': form, 'item': item})

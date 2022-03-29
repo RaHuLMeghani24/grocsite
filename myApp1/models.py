@@ -48,14 +48,15 @@ class Client(User):
 class OrderItem(models.Model):
     item = models.ForeignKey(Item, related_name='order_items', on_delete=models.CASCADE)
     client = models.ForeignKey(Client, related_name='order_clients', on_delete=models.CASCADE)
-    no_of_items = models.PositiveIntegerField(default=0)
+    # no_of_items = models.PositiveIntegerField(default=0)
+    items_ordered = models.PositiveIntegerField(default=0)
     STATUS_CHOICES = [('0', 'cancelled'), ('1', 'placed'), ('2', 'shipped'), ('3', 'delivered')]
     status = models.CharField(max_length=2, choices=STATUS_CHOICES, default='0')
     last_updated = models.DateField()
 
     def __str__(self):
         order_details = "Order for client from city {} having {} count of item {} with status {}"
-        return order_details.format(self.client.city, self.item.name, self.no_of_items, self.status)
+        return order_details.format(self.client.city, self.item.name, self.items_ordered, self.status)
 
     def total_price(self):
-        return self.item.price * self.no_of_items
+        return self.item.price * self.items_ordered
