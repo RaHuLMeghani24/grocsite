@@ -23,8 +23,14 @@ def index(request):
 
 
 def about(request):
+    VISIT_VARIABLE = 'num_of_visits'
     # return HttpResponse('This is the about page')
-    return render(request, 'myApp1/about0.html')
+    visits = request.COOKIES.get(VISIT_VARIABLE, 0)
+    print('VISIT_VARIABLE', visits)
+    context = {VISIT_VARIABLE: visits}
+    response = render(request, 'myApp1/about0.html', context=context)
+    response.set_cookie(key=VISIT_VARIABLE, max_age=300)
+    return response
 
 
 def detail(request, type_no):
