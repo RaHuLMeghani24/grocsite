@@ -25,8 +25,8 @@ class Item(models.Model):
     interested = models.PositiveIntegerField(default=0)
 
     def __str__(self):
-        details = "{} (item)"
-        return details.format(self.name)
+        details = "{} (item) with stock {}"
+        return details.format(self.name, self.stock)
 
     def topup(self):
         self.stock += 200
@@ -52,7 +52,7 @@ class OrderItem(models.Model):
     items_ordered = models.PositiveIntegerField(default=0)
     STATUS_CHOICES = [('0', 'cancelled'), ('1', 'placed'), ('2', 'shipped'), ('3', 'delivered')]
     status = models.CharField(max_length=2, choices=STATUS_CHOICES, default='0')
-    last_updated = models.DateField()
+    last_updated = models.DateField(auto_now=True)
 
     def __str__(self):
         order_details = "Order for client from city {} having {} count of item {} with status {}"

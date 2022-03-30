@@ -4,7 +4,11 @@
         <h2> List of Items </h2>
         <ol>
             {% for item in itemlist %}
-                <li> {{ item.name }} </li>
+                <li>
+                    {#                    <a href="{% url "myApp1:items" item_id=item.id %}"> {{ item.name }}</a>#}
+                    <a href="{% url "myApp1:itemdetail" item_id=item.id %}"> {{ item.name }}</a>
+                    of price: ${{ item.price }}
+                </li>
             {% endfor %}
         </ol>
     {% else %}

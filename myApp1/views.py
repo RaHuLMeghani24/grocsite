@@ -54,20 +54,27 @@ def placeorder(request):
             if order.items_ordered <= order.item.stock:
                 order.save()
                 msg = 'Your order has been placed successfully.'
-                print('order item', order.item, 'before saving')
                 order.item.stock -= order.items_ordered
                 order.item.save()
-                # TODO remove debug
-                print('order item', order.item, 'after saving')
             else:
                 msg = 'We do not have sufficient stock to fill your order.'
-                return render(request, 'myapp1/order_response.html', {'msg': msg})
+            return render(request, 'myapp1/order_response.html', {'msg': msg})
     else:
         form = OrderItemForm()
     return render(request, 'myapp1/placeorder.html', {'form': form, 'msg': msg, 'itemlist': itemlist})
 
 
 def itemdetail(request, item_id):
-    form = InterestForm()
     item = Item.objects.get(id=item_id)
-    return render(request, 'myApp1/itemdetail.html', {'form': form, 'item': item})
+    msg = ''
+    if request.method == 'POST':
+        form = InterestForm(request.POST)
+        if form.is_valid():
+            msg = 'Your interest is "{}" in item "{}" with quantity "{}" and comments "{}"'
+            interest = form.cleaned_data['interested']
+            quantity = form.cleaned_data['quantity']
+            comments = form.cleaned_data['comments']
+            msg = msg.format(interest, item.name, quantity, comments)
+    else:
+        form = InterestForm()
+    return render(request, 'myApp1/itemdetail.html', {'form': form, 'item': item, 'msg': msg})
